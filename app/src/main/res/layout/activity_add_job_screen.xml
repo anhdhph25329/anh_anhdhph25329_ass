@@ -7,11 +7,58 @@
     android:layout_height="match_parent"
     tools:context=".screen.AddJobScreen"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:layout_marginHorizontal="16dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm công việc"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
     <EditText
+        android:id="@+id/edtJobname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="enter job's name"/>
+    <EditText
+        android:id="@+id/edtContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter job's content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: "
+            android:textStyle="bold"
+            android:textSize="20dp"/>
+        <Spinner
+            android:id="@+id/spStatus"
+            android:layout_gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtStartday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter job's start day"/>
+    <EditText
+        android:id="@+id/edtEndday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter job's end day"/>
+    <Button
+        android:layout_marginTop="16dp"
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"/>
 
 </LinearLayout>

@@ -49,12 +49,13 @@ public class FragReg extends Fragment {
         String emailPattern = "^[a-zA-Z0-9._%+-]+@gmail\\.com$";
         String passPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
 
-        String fullname = edtFullname.getText().toString();
-        String username = edtUsername.getText().toString().trim();
-        String email = edtEmail.getText().toString().trim();
-        String password = edtPassword.getText().toString();
 
         btnSignup.setOnClickListener(view1 -> {
+
+            String fullname = edtFullname.getText().toString();
+            String username = edtUsername.getText().toString().trim();
+            String email = edtEmail.getText().toString().trim();
+            String password = edtPassword.getText().toString();
 
             if (fullname.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()){
                 Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();

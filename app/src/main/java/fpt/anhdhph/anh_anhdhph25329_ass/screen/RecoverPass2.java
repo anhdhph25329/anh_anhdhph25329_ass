@@ -46,11 +46,13 @@ public class RecoverPass2 extends AppCompatActivity {
     }
 
     void confirm(){
-        String newPassword = edtNewpass.getText().toString();
-        String confirmPassword = edtConfirmPass.getText().toString();
-        String username = getIntent().getStringExtra("username");
+
 
         btnConfirm.setOnClickListener(view -> {
+            String newPassword = edtNewpass.getText().toString();
+            String confirmPassword = edtConfirmPass.getText().toString();
+            String username = getIntent().getStringExtra("username");
+
              // Lấy Username từ màn hình trước
             if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();

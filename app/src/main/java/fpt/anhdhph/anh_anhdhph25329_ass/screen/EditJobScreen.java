@@ -70,6 +70,8 @@ public class EditJobScreen extends AppCompatActivity {
     }
 
     void editJob(){
+        String dayPattern = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\\\d{4}$";
+
         btnSaveE.setOnClickListener(view -> {
             String name = edtJobnameE.getText().toString();
             String content = edtContentE.getText().toString();
@@ -81,6 +83,12 @@ public class EditJobScreen extends AppCompatActivity {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+
+//            if (!startDay.matches(dayPattern) || !endDay.matches(dayPattern)) {
+//                Toast.makeText(this, "Ngày phải được nhập theo định dạng dd/mm/yyyy", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
 
             Job job = new Job();
             job.setId(jobId);

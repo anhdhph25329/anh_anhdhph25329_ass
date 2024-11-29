@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0: new | 1: working | 2: finish | -1: remove"/>
+        android:text=" ID | Name | Content | Status (*) | Start Day | End Day"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -20,14 +20,20 @@
         android:layout_weight="1"
         android:id="@+id/rvJob"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*: 0: new | 1: working | 2: finish | -1: remove"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="end"
         android:layout_marginBottom="50dp"
         android:id="@+id/btnAdd"
         android:src="@drawable/baseline_add_24"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="3dp"
         android:layout_marginTop="5dp"/>
 
 </LinearLayout>

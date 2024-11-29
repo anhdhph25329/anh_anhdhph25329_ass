@@ -32,11 +32,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status: "
             android:textStyle="bold"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
         <Spinner
             android:id="@+id/spStatus"
             android:layout_gravity="start"
@@ -56,9 +57,9 @@
         android:hint="enter job's end day"/>
     <Button
         android:layout_marginTop="16dp"
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"/>
+        android:text="Save"/>
 
 </LinearLayout>

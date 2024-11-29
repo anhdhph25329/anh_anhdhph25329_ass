@@ -13,58 +13,76 @@ import fpt.anhdhph.anh_anhdhph25329_ass.model.Job;
 
 public class JobDAO {
     DbHelper dbHelper;
-    SQLiteDatabase sqLiteDatabase;
     Context context;
     public JobDAO(Context context) {
         this.context = context;
         dbHelper = new DbHelper(context);
-        sqLiteDatabase = dbHelper.getWritableDatabase();
     }
 
-    public int addJob(Job job){
+    // Thêm job vào cơ sở dữ liệu
+    public boolean addJob(Job job) {
+        if (job.getName() == null || job.getContent() == null || job.getStartDay() == null || job.getEndDay() == null) {
+            Log.e("JobDAO", "Dữ liệu không hợp lệ. Không thể thêm công việc.");
+            return false;
+        }
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Name", job.getName());
         values.put("Content", job.getContent());
         values.put("Status", job.getStatus());
-        values.put("Start Day", job.getStartDay());
-        values.put("End Day", job.getEndDay());
-        int kq = (int) sqLiteDatabase.insert("tb_job", null, values);
-        return kq;
+        values.put("[Start Day]", job.getStartDay());
+        values.put("[End Day]", job.getEndDay());
+
+        long result = sqLiteDatabase.insert("tb_job", null, values);
+        return result != -1;
     }
 
+    // Cập nhật job trong cơ sở dữ liệu
+    public boolean updateJob(Job job) {
+        ContentValues values = new ContentValues();
+        values.put("Name", job.getName());
+        values.put("Content", job.getContent());
+        values.put("Status", job.getStatus());
+        values.put("[Start Day]", job.getStartDay());
+        values.put("[End Day]", job.getEndDay());
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsAffected = db.update("tb_job", values, "ID = ?", new String[]{String.valueOf(job.getId())});
+        return rowsAffected > 0;
+    }
+
+    // Xóa job khỏi cơ sở dữ liệu
+    public boolean deleteJob(int jobId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsAffected = db.delete("tb_job", "ID = ?", new String[]{String.valueOf(jobId)});
+        return rowsAffected > 0; // Trả về true nếu có dòng bị xóa
+    }
+
+    // Lấy danh sách job từ cơ sở dữ liệu
     public ArrayList<Job> getList(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         ArrayList<Job> list = new ArrayList<>();
-        String sql = "SELECT id, name FROM tb_cat";
-        Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
-        if (cursor != null && cursor.getCount() > 0){
-            //lấy được dữ liệu
+        String sql = "SELECT ID, Name, Content, Status, [Start Day], [End Day] FROM tb_job";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
-
-            //duyệt vòng lặp
             do {
-                //thứ tự cột: id là 0, name là 1
-                int id = cursor.getInt(0);
-                String name = cursor.getString(1);
-                String content = cursor.getString(2);
-                int status = cursor.getInt(3);
-                String startDay = cursor.getString(4);
-                String endDay = cursor.getString(5);
-
-
                 Job job = new Job();
-                job.setId(id);
-                job.setName(name);
-                job.setContent(content);
-                job.setStatus(status);
-                job.setStartDay(startDay);
-                job.setEndDay(endDay);
-                //thêm vào list
+                job.setId(cursor.getInt(0));
+                job.setName(cursor.getString(1));
+                job.setContent(cursor.getString(2));
+                job.setStatus(cursor.getInt(3));
+                job.setStartDay(cursor.getString(4));
+                job.setEndDay(cursor.getString(5));
                 list.add(job);
-            }while (cursor.moveToNext());
-
-        }else {
-            Log.d("zzz", "JobDAO::getList: Không lấy được dữ liệu");
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("JobDAO", "Không lấy được dữ liệu công việc");
         }
+
+        cursor.close();
         return list;
     }
 }

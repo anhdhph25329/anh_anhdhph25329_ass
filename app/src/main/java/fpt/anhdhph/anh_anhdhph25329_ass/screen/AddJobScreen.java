@@ -1,9 +1,11 @@
 package fpt.anhdhph.anh_anhdhph25329_ass.screen;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,12 +14,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import fpt.anhdhph.anh_anhdhph25329_ass.R;
+import fpt.anhdhph.anh_anhdhph25329_ass.dao.JobDAO;
+import fpt.anhdhph.anh_anhdhph25329_ass.model.Job;
 
 public class AddJobScreen extends AppCompatActivity {
 
     EditText edtJobname, edtContent, edtStartday, edtEndday;
     Spinner spnStatus;
-    Button btnAdd;
+    Button btnSave;
+    JobDAO jobDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,13 @@ public class AddJobScreen extends AppCompatActivity {
 
         anhXa();
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.status_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnStatus.setAdapter(adapter);
+
+        addJob();
+
     }
 
     public void anhXa(){
@@ -40,6 +52,41 @@ public class AddJobScreen extends AppCompatActivity {
         spnStatus = findViewById(R.id.spStatus);
         edtStartday = findViewById(R.id.edtStartday);
         edtEndday = findViewById(R.id.edtEndday);
+        btnSave = findViewById(R.id.btnSave);
+        jobDAO = new JobDAO(this);
+    }
+
+    public void addJob(){
+
+        btnSave.setOnClickListener(v -> {
+            String name = edtJobname.getText().toString();
+            String content = edtContent.getText().toString();
+            String startDay = edtStartday.getText().toString();
+            String endDay = edtEndday.getText().toString();
+            int status = spnStatus.getSelectedItemPosition();
+
+            if (name.isEmpty() || content.isEmpty() || startDay.isEmpty() || endDay.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Job newJob = new Job();
+            newJob.setName(name);
+            newJob.setContent(content);
+            newJob.setStatus(status);
+            newJob.setStartDay(startDay);
+            newJob.setEndDay(endDay);
+
+            boolean isAdded = jobDAO.addJob(newJob);
+            if (isAdded) {
+                Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
+                finish();
+            }else {
+                Toast.makeText(this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
 }

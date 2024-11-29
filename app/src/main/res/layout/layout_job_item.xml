@@ -15,41 +15,39 @@
 
         <TextView
             android:id="@+id/tvId"
-            android:layout_width="20dp"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:text="ID"/>
         <TextView
-            android:textSize="20sp"
             android:layout_weight="1"
             android:id="@+id/tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Name"/>
         <TextView
+            android:textAlignment="center"
             android:id="@+id/tvContent"
-            android:textSize="20sp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Ct"/>
         <TextView
+            android:textAlignment="center"
             android:id="@+id/tvStatus"
-            android:textSize="20sp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Status"/>
         <TextView
+            android:textAlignment="center"
             android:id="@+id/tvStartDay"
-            android:textSize="20sp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Start"/>
         <TextView
+            android:textAlignment="center"
             android:id="@+id/tvEndDay"
-            android:textSize="20sp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

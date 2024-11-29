@@ -8,7 +8,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     Context context;
     public DbHelper(Context context) {
-        super(context, "QLCV.db", null, 13);
+        super(context, "QLCV.db", null, 15);
         this.context = context;
     }
 
@@ -32,7 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "    Name        TEXT    UNIQUE\n" +
                 "                        NOT NULL,\n" +
                 "    Content     TEXT    NOT NULL,\n" +
-                "    Status      INTEGER NOT NULL,\n" +
+                "    Status      INTEGER,\n" +
                 "    [Start Day] TEXT    NOT NULL,\n" +
                 "    [End Day]   TEXT    NOT NULL\n" +
                 ");";

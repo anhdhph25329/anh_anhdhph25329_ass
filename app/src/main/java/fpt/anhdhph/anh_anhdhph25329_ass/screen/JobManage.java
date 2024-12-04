@@ -2,6 +2,7 @@ package fpt.anhdhph.anh_anhdhph25329_ass.screen;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -43,7 +44,6 @@ public class JobManage extends AppCompatActivity {
         });
 
         anhXa();
-
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
                 this,

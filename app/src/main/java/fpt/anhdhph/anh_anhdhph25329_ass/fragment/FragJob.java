@@ -63,6 +63,7 @@ public class FragJob extends Fragment {
         jobDAO = new JobDAO(getContext());
         list = jobDAO.getList();
 
+
         rvJob.setLayoutManager(new LinearLayoutManager(getContext()));
         jobAdapter = new JobAdapter(getContext(), list);
         rvJob.setAdapter(jobAdapter);

@@ -1,9 +1,14 @@
 package fpt.anhdhph.anh_anhdhph25329_ass.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +17,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import fpt.anhdhph.anh_anhdhph25329_ass.R;
+import fpt.anhdhph.anh_anhdhph25329_ass.config.AddNotifyConfig;
 import fpt.anhdhph.anh_anhdhph25329_ass.dao.JobDAO;
 import fpt.anhdhph.anh_anhdhph25329_ass.model.Job;
 import fpt.anhdhph.anh_anhdhph25329_ass.screen.EditJobScreen;
+import fpt.anhdhph.anh_anhdhph25329_ass.screen.LogReg;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
 
@@ -73,6 +84,44 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyItemRangeChanged(position, list.size());
+
+
+                            Intent intentChitiet = new Intent(context, LogReg.class);
+                            intentChitiet.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                            // Tạo stack để chứa các activity khi gọi notify (chitietActvity)
+                            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                            stackBuilder.addNextIntentWithParentStack( intentChitiet );
+
+                            // su dung pendingIntent de gui notify
+                            PendingIntent pendingIntent = stackBuilder.getPendingIntent(
+                                    0,
+                                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                            // taoj layout cho notify
+                            Notification notify = new NotificationCompat.Builder(context, AddNotifyConfig.CHANEL_ID )
+                                    .setSmallIcon( android.R.drawable.ic_menu_view ) // bieeur tuowng nho
+                                    .setContentTitle("Job Removed!")
+                                    .setContentText(holder.tvName.getText().toString() + " has been removed!")
+                                    .setContentIntent( pendingIntent) // goi activity chitiet
+                                    .build();
+                            NotificationManagerCompat notificationManagerCompat =
+                                    NotificationManagerCompat.from(context);
+
+                            // kiem tra quyen gui thong bao
+                            if(ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED){
+                                // chua duoc cap quyen
+                                // yeu cau cap quyen
+                                ActivityCompat.requestPermissions((Activity) context,
+                                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                                        999);
+                                return;
+                            }else{
+                                // da duoc cap quyen
+                                int id_notify = (int) new Date().getTime();// tao ra chuoi so tranh trung lap
+                                // hien thi notify
+                                notificationManagerCompat.notify(id_notify, notify);
+                            }
+
                         } else {
                             Toast.makeText(context, "Failed to delete job!", Toast.LENGTH_SHORT).show();
                         }

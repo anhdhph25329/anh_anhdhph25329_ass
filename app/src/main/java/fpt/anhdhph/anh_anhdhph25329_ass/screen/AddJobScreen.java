@@ -117,9 +117,6 @@ public class AddJobScreen extends AppCompatActivity {
         Intent intentChitiet = new Intent(getApplicationContext(), LogReg.class);
         intentChitiet.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        //gui du lieu cho activity
-        intentChitiet.putExtra("dulieu", "Thong bao");
-
         // Tạo stack để chứa các activity khi gọi notify (chitietActvity)
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack( intentChitiet );
@@ -131,8 +128,8 @@ public class AddJobScreen extends AppCompatActivity {
         // taoj layout cho notify
         Notification notify = new NotificationCompat.Builder(this, AddNotifyConfig.CHANEL_ID )
                 .setSmallIcon( android.R.drawable.ic_menu_view ) // bieeur tuowng nho
-                .setContentTitle("Add job!")
-                .setContentText("Add job successfully!")
+                .setContentTitle("New Job Added!")
+                .setContentText(edtJobname.getText().toString() + " has been added to the list")
                 .setContentIntent( pendingIntent) // goi activity chitiet
                 .build();
         NotificationManagerCompat notificationManagerCompat =
